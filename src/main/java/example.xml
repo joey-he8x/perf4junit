@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report start="" end="">
+    <platform>
+        <processors>4</processors>
+        <os.arc>&lt;![CDATA[{OS_FULLNAME}]]&gt;</os.arc>
+        <os.name>&lt;![CDATA[{OS_NAME}]]&gt;</os.name>
+        <os.version>&lt;![CDATA[{OS_VERSION}]]&gt;</os.version>
+        <vm.name></vm.name>
+        <vm.version></vm.version>
+    </platform>
+    <test name="{TEST_NAME}" executed="{EXECUTION_STATUS}" start="" end="" >
+        <description>{TEST_DESCRIPTION}</description>
+        <load concurrency="" loop=""  />
+        <result total="" passed="" failed="" timeout="" escaped="">
+            <real avg="" min="" max="" count=""/>
+            <cpu avg="" min="" max="" count=""/>
+            <sys avg="" min="" max="" count=""/>
+            <usr avg="" min="" max="" count=""/>
+        </result>
+    </test>
+</report>
