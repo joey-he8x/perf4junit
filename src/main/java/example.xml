@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <report start="" end="">
+    <target>
+        <groupId></groupId>
+        <artifictId></artifictId>
+        <version></version>
+        <revision></revision>
+    </target>
     <platform>
         <processors>4</processors>
         <os.arc>&lt;![CDATA[{OS_FULLNAME}]]&gt;</os.arc>
@@ -8,7 +14,7 @@
         <vm.name></vm.name>
         <vm.version></vm.version>
     </platform>
-    <test name="{TEST_NAME}" executed="{EXECUTION_STATUS}" start="" end="" >
+    <test method_name="{TEST_NAME}" class_name="" executed="{EXECUTION_STATUS}" start="" end="" >
         <description>{TEST_DESCRIPTION}</description>
         <load concurrency="" loop=""  />
         <result total="" passed="" failed="" timeout="" escaped="">

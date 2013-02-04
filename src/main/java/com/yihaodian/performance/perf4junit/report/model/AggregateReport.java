@@ -23,13 +23,21 @@ public class AggregateReport {
     private Date start;
     @XStreamAsAttribute
     private Date end;
-    private final static Platform platform = new Platform();
+    @XStreamAsAttribute
+    private int total;
+    @XStreamAsAttribute
+    private int failed;
+    private Target target;
+    private Platform platform = new Platform();
     @XStreamImplicit(itemFieldName = "test")
     private List<Test> tests = new ArrayList<Test>();
 
-    public AggregateReport(Date start, Date end, List<Test> tests) {
+    public AggregateReport(){}
+    
+    public AggregateReport(Date start, Date end, Target target, List<Test> tests) {
         this.start = start;
         this.end = end;
+        this.target = target;
         this.tests = tests;
     }
 
@@ -49,7 +57,7 @@ public class AggregateReport {
         this.end = end;
     }
 
-    public static Platform getPlatform() {
+    public Platform getPlatform() {
         return platform;
     }
 
@@ -61,10 +69,76 @@ public class AggregateReport {
         this.tests = tests;
     }
 
+    public Target getTarget() {
+        return target;
+    }
+
+    public void setTarget(Target target) {
+        this.target = target;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public int getFailed() {
+        return failed;
+    }
+
+    public void setFailed(int failed) {
+        this.failed = failed;
+    }
+
+    public static class Target {
+
+        private String groupId;
+        private String artifactId;
+        private String version;
+        private String revision;
+
+        public String getRevision() {
+            return revision;
+        }
+
+        public void setRevision(String revision) {
+            this.revision = revision;
+        }
+
+        public String getVersion() {
+            return version;
+        }
+
+        public void setVersion(String version) {
+            this.version = version;
+        }
+
+        public String getGroupId() {
+            return groupId;
+        }
+
+        public void setGroupId(String groupId) {
+            this.groupId = groupId;
+        }
+
+        public String getArtifactId() {
+            return artifactId;
+        }
+
+        public void setArtifactId(String artifactId) {
+            this.artifactId = artifactId;
+        }
+    }
+
     public static class Test {
 
         @XStreamAsAttribute
-        private String name;
+        private String methodName;
+        @XStreamAsAttribute
+        private String className;
         @XStreamAsAttribute
         private boolean executed;
         @XStreamAsAttribute
@@ -99,18 +173,6 @@ public class AggregateReport {
             this.result = result;
         }
 
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public boolean getExecuted() {
-            return executed;
-        }
-
         public void setExecuted(boolean executed) {
             this.executed = executed;
         }
@@ -129,6 +191,26 @@ public class AggregateReport {
 
         public void setEnd(Date end) {
             this.end = end;
+        }
+
+        public String getMethodName() {
+            return methodName;
+        }
+
+        public void setMethodName(String methodName) {
+            this.methodName = methodName;
+        }
+
+        public String getClassName() {
+            return className;
+        }
+
+        public void setClassName(String className) {
+            this.className = className;
+        }
+
+        public boolean isExecuted() {
+            return executed;
         }
     }
 
