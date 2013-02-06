@@ -7,6 +7,9 @@ package com.yihaodian.performance.perf4junit.report;
 import com.thoughtworks.xstream.XStream;
 import com.yihaodian.performance.perf4junit.TestRunStats;
 import com.yihaodian.performance.perf4junit.report.model.AggregateReport;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.runner.Description;
@@ -40,7 +43,17 @@ public class PerfReporter extends RunListener {
 
         XStream stream = new XStream();
         stream.processAnnotations(AggregateReport.class);
-        System.out.println(stream.toXML(report));
+        File dir = new File("target/perf4junit");
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+        try {
+            FileOutputStream fs = new FileOutputStream("target/perf4junit/report.xml");
+            stream.toXML(report, fs);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+
     }
 
     public void testFinished(Description description, GroupedTimingStatistics timingStats, TestRunStats detail) {

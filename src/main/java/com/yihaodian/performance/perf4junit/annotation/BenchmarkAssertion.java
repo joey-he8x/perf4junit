@@ -19,7 +19,7 @@ public @interface BenchmarkAssertion {
     /*
      * 表示当错误率大于多少时将改测试标记为失败.
      */
-    float errorThreshold() default 1;
+    float errorThreshold() default 0.01f;
     /*
      * 表示当测试执行时间大于多少ms时将该次执行标记为失败.
      */

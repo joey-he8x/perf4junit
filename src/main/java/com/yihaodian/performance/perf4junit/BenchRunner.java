@@ -24,7 +24,6 @@ import org.junit.runners.model.InitializationError;
 import org.junit.runners.model.Statement;
 import org.perf4j.GroupedTimingStatistics;
 import org.perf4j.StopWatch;
-import org.perf4j.helpers.GroupedTimingStatisticsCsvFormatter;
 
 /**
  *
@@ -40,7 +39,6 @@ public class BenchRunner extends BlockJUnit4ClassRunner {
     public BenchRunner(Class<?> klass)
             throws InitializationError, ClassNotFoundException {
         super(klass);
-        System.out.println("new BenchRunner");
     }
 
     @Override
@@ -71,7 +69,6 @@ public class BenchRunner extends BlockJUnit4ClassRunner {
         currentStatistics = new GroupedTimingStatistics();
         try {
             for (int i = 0; i < b.warmup(); i++) {
-//                System.out.println("warmup:"+i);
                 try{
                     statement.evaluate();
                 }catch(Throwable e){}
@@ -106,15 +103,8 @@ public class BenchRunner extends BlockJUnit4ClassRunner {
         } finally {
             currentStatistics.setStopTime(System.currentTimeMillis());
             reporter.testFinished(description, currentStatistics, currentStats);
-//            genReport();
             eachNotifier.fireTestFinished();
         }
-    }
-
-    private void genReport() {
-        GroupedTimingStatisticsCsvFormatter formater = new GroupedTimingStatisticsCsvFormatter();
-        System.out.println(GroupedTimingStatisticsCsvFormatter.DEFAULT_FORMAT_STRING);
-        System.out.println(formater.format(currentStatistics));
     }
 
     /*

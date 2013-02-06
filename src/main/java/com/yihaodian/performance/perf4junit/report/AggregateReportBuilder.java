@@ -72,7 +72,6 @@ public class AggregateReportBuilder {
         try {
             SVNInfo info = SVNClientManager.newInstance().getWCClient().doInfo(new File(""), SVNRevision.HEAD);
             t.setRevision(info.getCommittedRevision().toString());
-            System.out.println(info.toString());
         } catch (SVNException ex) {
             Logger.getLogger(AggregateReportBuilder.class.getName()).log(Level.SEVERE, null, ex);
         }
