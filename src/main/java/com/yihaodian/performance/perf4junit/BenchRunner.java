@@ -4,7 +4,9 @@
  */
 package com.yihaodian.performance.perf4junit;
 
+import com.yihaodian.performance.perf4junit.measure.CpuStopWatch;
 import com.yihaodian.performance.perf4junit.annotation.Benchmark;
+import com.yihaodian.performance.perf4junit.measure.MyGroupedTimingStatistics;
 import com.yihaodian.performance.perf4junit.report.PerfReporter;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,7 +24,6 @@ import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
 import org.junit.runners.model.Statement;
-import org.perf4j.GroupedTimingStatistics;
 import org.perf4j.StopWatch;
 
 /**
@@ -33,7 +34,7 @@ public class BenchRunner extends BlockJUnit4ClassRunner {
 
     private static PerfReporter reporter = new PerfReporter();
     private static Set<RunNotifier> notifierCache = new HashSet<RunNotifier>();
-    private GroupedTimingStatistics currentStatistics;
+    private MyGroupedTimingStatistics currentStatistics;
     private TestRunStats currentStats;
 
     public BenchRunner(Class<?> klass)
@@ -66,7 +67,7 @@ public class BenchRunner extends BlockJUnit4ClassRunner {
         eachNotifier.fireTestStarted();
         final Benchmark b = (Benchmark) description.getAnnotation(Benchmark.class);
         currentStats = new TestRunStats(b.assertion());
-        currentStatistics = new GroupedTimingStatistics();
+        currentStatistics = new MyGroupedTimingStatistics();
         try {
             for (int i = 0; i < b.warmup(); i++) {
                 try{
@@ -141,11 +142,11 @@ public class BenchRunner extends BlockJUnit4ClassRunner {
         }
     }
 
-    public GroupedTimingStatistics getGroupedTimingStatistics() {
+    public MyGroupedTimingStatistics getGroupedTimingStatistics() {
         return currentStatistics;
     }
 
-    public void setGroupedTimingStatistics(GroupedTimingStatistics groupedTimingStatistics) {
+    public void setGroupedTimingStatistics(MyGroupedTimingStatistics groupedTimingStatistics) {
         this.currentStatistics = groupedTimingStatistics;
     }
 }

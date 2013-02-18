@@ -6,6 +6,8 @@ package com.yihaodian.performance.perf4junit.report;
 
 import com.yihaodian.performance.perf4junit.TestRunStats;
 import com.yihaodian.performance.perf4junit.annotation.Benchmark;
+import com.yihaodian.performance.perf4junit.measure.MyGroupedTimingStatistics;
+import com.yihaodian.performance.perf4junit.measure.MyTimingStatistics;
 import com.yihaodian.performance.perf4junit.report.model.AggregateReport;
 import com.yihaodian.performance.perf4junit.report.model.AggregateReport.*;
 import java.io.BufferedInputStream;
@@ -22,8 +24,6 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.runner.Description;
-import org.perf4j.GroupedTimingStatistics;
-import org.perf4j.TimingStatistics;
 import org.tmatesoft.svn.core.SVNException;
 import org.tmatesoft.svn.core.wc.SVNClientManager;
 import org.tmatesoft.svn.core.wc.SVNInfo;
@@ -35,7 +35,7 @@ import org.tmatesoft.svn.core.wc.SVNRevision;
  */
 public class AggregateReportBuilder {
 
-    public AggregateReport buildAggregateReport(long start, long end, Map<Description, GroupedTimingStatistics> statistics, Map<Description, TestRunStats> detailMap, org.junit.runner.Result result) {
+    public AggregateReport buildAggregateReport(long start, long end, Map<Description, MyGroupedTimingStatistics> statistics, Map<Description, TestRunStats> detailMap, org.junit.runner.Result result) {
         AggregateReport rs = new AggregateReport();
         rs.setStart(new Date(start));
         rs.setEnd(new Date(end));
@@ -45,7 +45,7 @@ public class AggregateReportBuilder {
         while (it.hasNext()) {
             Map.Entry pairs = (Map.Entry) it.next();
             Description d = (Description) pairs.getKey();
-            GroupedTimingStatistics g = (GroupedTimingStatistics) pairs.getValue();
+            MyGroupedTimingStatistics g = (MyGroupedTimingStatistics) pairs.getValue();
             TestRunStats s = detailMap.get(d);
             tests.add(buildTest(d, g, s));
         }
@@ -78,7 +78,7 @@ public class AggregateReportBuilder {
         return t;
     }
 
-    private Test buildTest(Description d, GroupedTimingStatistics gs, TestRunStats detail) {
+    private Test buildTest(Description d, MyGroupedTimingStatistics gs, TestRunStats detail) {
         Test test = new Test();
         Benchmark b = (Benchmark) d.getAnnotation(Benchmark.class);
         test.setDescription(b.description());
@@ -92,7 +92,7 @@ public class AggregateReportBuilder {
         return test;
     }
 
-    private Result buildResult(GroupedTimingStatistics gs, TestRunStats detail) {
+    private Result buildResult(MyGroupedTimingStatistics gs, TestRunStats detail) {
         Result result = new Result();
         result.setEscaped(gs.getStopTime() - gs.getStartTime());
         result.setFailed(detail.getFailed());
@@ -103,12 +103,13 @@ public class AggregateReportBuilder {
         while (it.hasNext()) {
             Map.Entry pairs = (Map.Entry) it.next();
             String tag = (String) pairs.getKey();
-            TimingStatistics ts = (TimingStatistics) pairs.getValue();
+            MyTimingStatistics ts = (MyTimingStatistics) pairs.getValue();
             ResultTimingStats rts = new ResultTimingStats();
             rts.setAvg(new Float(ts.getMean()));
             rts.setCount(ts.getCount());
             rts.setMax(new Float(ts.getMax()));
             rts.setMin(new Float(ts.getMin()));
+            rts.setSum(ts.getSum());
             if ("real".equals(tag)) {
                 result.setRealStats(rts);
             } else if (("cpu").equals(tag)) {

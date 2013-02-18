@@ -6,6 +6,7 @@ package com.yihaodian.performance.perf4junit.report;
 
 import com.thoughtworks.xstream.XStream;
 import com.yihaodian.performance.perf4junit.TestRunStats;
+import com.yihaodian.performance.perf4junit.measure.MyGroupedTimingStatistics;
 import com.yihaodian.performance.perf4junit.report.model.AggregateReport;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,7 +16,6 @@ import java.util.Map;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.RunListener;
-import org.perf4j.GroupedTimingStatistics;
 
 /**
  *
@@ -25,7 +25,7 @@ public class PerfReporter extends RunListener {
 
     private Long start = null;
     private Long end;
-    private Map<Description, GroupedTimingStatistics> timingStatsMap = new HashMap<Description, GroupedTimingStatistics>();
+    private Map<Description, MyGroupedTimingStatistics> timingStatsMap = new HashMap<Description, MyGroupedTimingStatistics>();
     private Map<Description, TestRunStats> detailMap = new HashMap<Description, TestRunStats>();
 
     @Override
@@ -56,7 +56,7 @@ public class PerfReporter extends RunListener {
 
     }
 
-    public void testFinished(Description description, GroupedTimingStatistics timingStats, TestRunStats detail) {
+    public void testFinished(Description description, MyGroupedTimingStatistics timingStats, TestRunStats detail) {
         timingStatsMap.put(description, timingStats);
         detailMap.put(description, detail);
     }

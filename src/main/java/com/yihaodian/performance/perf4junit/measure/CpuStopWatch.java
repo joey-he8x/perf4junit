@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.yihaodian.performance.perf4junit;
+package com.yihaodian.performance.perf4junit.measure;
 
 import java.lang.management.ManagementFactory;
 import org.perf4j.StopWatch;

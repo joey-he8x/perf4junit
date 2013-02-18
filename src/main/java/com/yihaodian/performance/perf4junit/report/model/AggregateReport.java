@@ -419,6 +419,9 @@ public class AggregateReport {
         private float max;
         @XStreamAsAttribute
         private int count;
+        @XStreamAsAttribute
+        private long sum;
+        
 
         public float getAvg() {
             return avg;
@@ -450,6 +453,14 @@ public class AggregateReport {
 
         public void setCount(int count) {
             this.count = count;
+        }
+
+        public long getSum() {
+            return sum;
+        }
+
+        public void setSum(long sum) {
+            this.sum = sum;
         }
     }
 }
